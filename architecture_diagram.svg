@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 660" width="1100" height="660" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrowAmber" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#f59e0b"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#34d399"/>
+    </marker>
+  </defs>
+
+  <rect width="1100" height="660" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="550" y="38" text-anchor="middle" fill="#f8fafc" font-size="22" font-weight="bold">Visitor Counter Web App Architecture (Flask + Redis on Docker &amp; Kubernetes)</text>
+  <text x="550" y="60" text-anchor="middle" fill="#94a3b8" font-size="13">Local Multi-Cluster Hybrid Cloud Simulation using Minikube (Private Cloud Primary + Public Cloud Failover)</text>
+
+  <!-- User / Client -->
+  <rect x="405" y="85" width="290" height="64" rx="10" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+  <text x="550" y="112" text-anchor="middle" fill="#f8fafc" font-size="15" font-weight="bold">User / Browser Traffic</text>
+  <text x="550" y="132" text-anchor="middle" fill="#38bdf8" font-size="12">Primary Routing + Failover Switching</text>
+
+  <!-- Arrows Client -> Clusters -->
+  <path d="M470,149 L285,235" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+  <text x="305" y="192" fill="#34d399" font-size="12" font-weight="bold">Primary (Active)</text>
+
+  <path d="M630,149 L815,235" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="6,4" marker-end="url(#arrowAmber)"/>
+  <text x="735" y="192" fill="#f59e0b" font-size="12" font-weight="bold">Failover (On Outage)</text>
+
+  <!-- Cluster 1: Private Cloud -->
+  <rect x="40" y="242" width="490" height="290" rx="14" fill="#162235" stroke="#34d399" stroke-width="2"/>
+  <text x="285" y="270" text-anchor="middle" fill="#34d399" font-size="16" font-weight="bold">Cluster 1: Private Cloud (Minikube -p private-cloud)</text>
+
+  <!-- NodePort Service 1 -->
+  <rect x="175" y="290" width="220" height="44" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="285" y="309" text-anchor="middle" fill="#f8fafc" font-size="13" font-weight="bold">flask-app-service (NodePort)</text>
+  <text x="285" y="325" text-anchor="middle" fill="#94a3b8" font-size="11">Port 80 -&gt; 5000 (NodePort 30080)</text>
+
+  <!-- HPA Box -->
+  <rect x="60" y="356" width="140" height="76" rx="8" fill="#1e1b4b" stroke="#818cf8" stroke-width="1.5"/>
+  <text x="130" y="378" text-anchor="middle" fill="#c7d2fe" font-size="13" font-weight="bold">HPA Autoscaler</text>
+  <text x="130" y="396" text-anchor="middle" fill="#94a3b8" font-size="11">min: 1 | max: 5</text>
+  <text x="130" y="412" text-anchor="middle" fill="#94a3b8" font-size="11">Target CPU: 50%</text>
+  <text x="130" y="426" text-anchor="middle" fill="#a5b4fc" font-size="10">hpa.yaml</text>
+
+  <!-- Flask Pods -->
+  <rect x="220" y="356" width="290" height="76" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="365" y="375" text-anchor="middle" fill="#e0f2fe" font-size="12" font-weight="bold">Flask App Deployment (visitor-counter:optimized)</text>
+  <rect x="235" y="386" width="120" height="36" rx="6" fill="#0284c7"/>
+  <text x="295" y="402" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="bold">Pod 1 (Gunicorn)</text>
+  <text x="295" y="416" text-anchor="middle" fill="#e0f2fe" font-size="10">50m CPU / 64Mi</text>
+  <rect x="375" y="386" width="120" height="36" rx="6" fill="#0284c7"/>
+  <text x="435" y="402" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="bold">Pod 2..N (HPA)</text>
+  <text x="435" y="416" text-anchor="middle" fill="#e0f2fe" font-size="10">50m CPU / 64Mi</text>
+
+  <!-- Arrows inside Cluster 1 -->
+  <line x1="285" y1="334" x2="285" y2="354" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+  <line x1="200" y1="394" x2="218" y2="394" stroke="#818cf8" stroke-width="1.5"/>
+  <line x1="365" y1="432" x2="365" y2="458" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+
+  <!-- Redis 1 -->
+  <rect x="235" y="460" width="260" height="52" rx="8" fill="#3f1d2b" stroke="#fb7185" stroke-width="1.5"/>
+  <text x="365" y="482" text-anchor="middle" fill="#ffe4e6" font-size="13" font-weight="bold">Redis Service + Pod (redis:7-alpine)</text>
+  <text x="365" y="499" text-anchor="middle" fill="#fda4af" font-size="11">Port 6379 | maxmemory 48mb | LRU</text>
+
+  <!-- Cluster 2: Public Cloud -->
+  <rect x="570" y="242" width="490" height="290" rx="14" fill="#162235" stroke="#f59e0b" stroke-width="2"/>
+  <text x="815" y="270" text-anchor="middle" fill="#f59e0b" font-size="16" font-weight="bold">Cluster 2: Simulated Public Cloud (Minikube -p public-cloud)</text>
+
+  <!-- NodePort Service 2 -->
+  <rect x="705" y="290" width="220" height="44" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="815" y="309" text-anchor="middle" fill="#f8fafc" font-size="13" font-weight="bold">flask-app-service (NodePort)</text>
+  <text x="815" y="325" text-anchor="middle" fill="#94a3b8" font-size="11">Port 80 -&gt; 5000 (NodePort 30080)</text>
+
+  <line x1="815" y1="334" x2="815" y2="354" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+
+  <!-- Flask Pod 2 -->
+  <rect x="665" y="356" width="300" height="76" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="815" y="375" text-anchor="middle" fill="#fef3c7" font-size="12" font-weight="bold">Flask Standby Deployment (visitor-counter:optimized)</text>
+  <rect x="735" y="386" width="160" height="36" rx="6" fill="#d97706"/>
+  <text x="815" y="402" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="bold">Standby Pod (Ready)</text>
+  <text x="815" y="416" text-anchor="middle" fill="#fef3c7" font-size="10">50m CPU / 64Mi</text>
+
+  <line x1="815" y1="432" x2="815" y2="458" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+
+  <!-- Redis 2 -->
+  <rect x="685" y="460" width="260" height="52" rx="8" fill="#3f1d2b" stroke="#fb7185" stroke-width="1.5"/>
+  <text x="815" y="482" text-anchor="middle" fill="#ffe4e6" font-size="13" font-weight="bold">Redis Service + Pod (redis:7-alpine)</text>
+  <text x="815" y="499" text-anchor="middle" fill="#fda4af" font-size="11">Port 6379 | maxmemory 48mb | LRU</text>
+
+  <!-- Cost Optimization Footer -->
+  <rect x="40" y="555" width="1020" height="74" rx="10" fill="#0f172a" stroke="#475569" stroke-width="1.5"/>
+  <text x="550" y="578" text-anchor="middle" fill="#38bdf8" font-size="14" font-weight="bold">Cost Optimization Techniques Applied</text>
+  <text x="550" y="599" text-anchor="middle" fill="#cbd5e1" font-size="12">1. Multi-Stage Alpine Image (python:3.12-alpine vs python:3.12)   |   2. Kubernetes Resource Right-Sizing (50m/64Mi vs 250m/256Mi)</text>
+  <text x="550" y="617" text-anchor="middle" fill="#cbd5e1" font-size="12">3. HPA Scale-Down at Idle (minReplicas: 1 vs static 4)   |   4. Lightweight Redis Alpine + 48MB Maxmemory LRU Cap</text>
+</svg>
